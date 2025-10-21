@@ -26,7 +26,7 @@ def make_queries(n, q, hot_pool=30, p_hot=0.95, p_update=0.03):
 
 # --- No caching implementation
 def range_sum_no_cache(array, left, right):
-    return sum(array[left:right])
+    return sum(array[left : right + 1])
 
 
 def update_no_cache(array, index, value):
