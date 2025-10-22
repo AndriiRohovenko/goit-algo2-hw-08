@@ -11,9 +11,12 @@ class SlidingWindowRateLimiter:
         self.user_requests: Dict[str, deque] = {}
 
     def _cleanup_window(self, user_id: str, current_time: float) -> None:
+        # Якщо користувач не має deque — створюємо
         if user_id not in self.user_requests:
-            return
+            self.user_requests[user_id] = deque()
+            return  # нема що чистити поки що
 
+        # Прибираємо всі таймстампи, старші за поточне вікно
         while (
             self.user_requests[user_id]
             and self.user_requests[user_id][0] < current_time - self.window_size
@@ -31,7 +34,7 @@ class SlidingWindowRateLimiter:
         return len(self.user_requests[user_id]) < self.max_requests
 
     def record_message(self, user_id: str) -> bool:
-
+        print(self.user_requests)
         current_time = time.time()
         self._cleanup_window(user_id, current_time)
 
