@@ -28,13 +28,9 @@ class SlidingWindowRateLimiter:
         current_time = time.time()
         self._cleanup_window(user_id, current_time)
 
-        if user_id not in self.user_requests:
-            self.user_requests[user_id] = deque()
-
         return len(self.user_requests[user_id]) < self.max_requests
 
     def record_message(self, user_id: str) -> bool:
-        print(self.user_requests)
         current_time = time.time()
         self._cleanup_window(user_id, current_time)
 
